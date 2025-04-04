@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive Learning Showcase</title>
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #06d6a0;
+            --warning: #ffbe0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        header {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/1600/900') center/cover no-repeat;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            position: relative;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2a75ee;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(58, 134, 255, 0.5);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(131, 56, 236, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #7229db;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(131, 56, 236, 0.5);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 50px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            position: sticky;
+            top: 1rem;
+            margin: 0 auto;
+            max-width: 90%;
+        }
+        
+        .nav-link {
+            padding: 0.7rem 1.2rem;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .showcase-section {
+            padding: 5rem 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .showcase-section:nth-child(odd) {
+            background-color: rgba(248, 249, 250, 0.7);
+        }
+        
+        .showcase-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: 320px;
+            max-width: 100%;
+            transform: translateY(0);
+        }
+        
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 5px solid var(--primary);
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+        
+        .card-text {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .social-icon {
+            font-size: 1.5rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-particle 15s ease-in infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes float-particle {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.3;
+            }
+            80% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .banner {
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 20px,
+                rgba(255, 255, 255, 0.1) 20px,
+                rgba(255, 255, 255, 0.1) 40px
+            );
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .feature::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-desc {
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 3rem auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -13px;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            border-width: 10px;
+            border-style: solid;
+            top: 15px;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            border-color: transparent transparent transparent white;
+            right: -20px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            border-color: transparent white transparent transparent;
+            left: -20px;
+        }
+        
+        .timeline-date {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Animation for timeline items */
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s ease;
+        }
+        
+        .timeline-item:nth-child(even) {
+            transform: translateX(100px);
+        }
+        
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Tablet and mobile styles */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+                border-radius: 15px;
+                padding: 0.5rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .timeline-content::after {
+                display: none;
+            }
+        }
+        
+        /* 3D card effect */
+        .card-3d-container {
+            perspective: 1000px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card-3d {
+            width: 320px;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(180deg);
+        }
+        
+        .card-3d-front, .card-3d-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-3d-front {
+            background-color: white;
+        }
+        
+        .card-3d-back {
+            background-color: var(--primary);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .card-3d-img {
+            width: 100%;
+            height: 60%;
+            object-fit: cover;
+        }
+        
+        .card-3d-body {
+            padding: 1.5rem;
+        }
+        
+        /* Circular progress */
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .progress-circle {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+        
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-circle-bg {
+            fill: none;
+            stroke: #eee;
+            stroke-width: 8;
+        }
+        
+        .progress-circle-fill {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        /* Custom cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 2rem;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom cursor -->
+    <div class="custom-cursor"></div>
+    
+    <!-- Header Section -->
+    <header class="gradient-bg">
+        <div class="particles" id="particles"></div>
+        <h1>Immersive Learning Showcase</h1>
+        <p class="subtitle">Explore the future of education through immersive and interactive learning experiences. Connect, engage, and transform your classroom.</p>
+        <div>
+            <a href="#overview" class="btn btn-primary">Explore Now</a>
+            <a href="#contact" class="btn btn-secondary">Connect With Us</a>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="navigation" id="navbar">
+        <a href="#overview" class="nav-link">Overview</a>
+        <a href="#vr-experiences" class="nav-link">VR Experiences</a>
+        <a href="#ar-applications" class="nav-link">AR Applications</a>
+        <a href="#simulations" class="nav-link">Simulations</a>
+        <a href="#gamification" class="nav-link">Gamification</a>
+        <a href="#case-studies" class="nav-link">Case Studies</a>
+        <a href="#contact" class="nav-link">Connect</a>
+    </nav>
+    
+    <!-- Overview Section -->
+    <section class="showcase-section" id="overview">
+        <div class="container">
+            <div class="showcase-content">
+                <h2>The Power of Immersive Learning</h2>
+                <p>Immersive learning technologies transform traditional education by creating engaging, multi-sensory experiences that enhance knowledge retention and skill development. These innovations bring abstract concepts to life, making learning more intuitive and enjoyable.</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🧠</div>
+                        <h3>Deeper Engagement</h3>
+                        <p>Captivate students with interactive experiences that activate multiple learning pathways.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Accelerated Learning</h3>
+                        <p>Improve knowledge retention by up to 75% compared to traditional methods.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Risk-Free Practice</h3>
+                        <p>Master complex skills in safe, simulated environments before real-world application.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Global Accessibility</h3>
+                        <p>Break down geographical barriers with virtual experiences that connect learners worldwide.</p>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">90%</div>
+                        <div class="stat-desc">Increase in Student Engagement</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">75%</div>
+                        <div class="stat-desc">Better Knowledge Retention</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">65%</div>
+                        <div class="stat-desc">Faster Skill Acquisition</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Banner -->
+    <div class="banner">
+        <h2>Transform Your Classroom with Immersive Technologies</h2>
+        <p>Explore our showcase of cutting-edge educational innovations</p>
+        <a href="#contact" class="btn btn-primary">Get Started Today</a>
+    </div>
+    
+    <!-- VR Experiences Section -->
+    <section class="showcase-section" id="vr-experiences">
+        <div class="container">
+            <div class="showcase-content">
+                <h2>Virtual Reality Experiences</h2>
+                <p>Transport your students to different worlds, time periods, and impossible places with our curated VR learning experiences. These fully immersive environments allow for experiential learning that would be impossible in a traditional classroom.</p>
+                
+                <div class="card-container">
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Trigonometric Game" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">3D Trigonometry Game</h3>
+                            <p class="card-text">Master vectors and polar coordinates through an engaging 3D game environment.</p>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="vr-modal-1">Experience Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Interactive Periodic Table" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Interactive Periodic Table</h3>
+                            <p class="card-text">Explore chemical elements in an immersive environment with dynamic visualizations and interactive models.</p>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="vr-modal-2">Experience Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Correlation Network" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Correlation Relativeness Network</h3>
+                            <p class="card-text">Visualize complex statistical relationships through an interactive network display.</p>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="vr-modal-3">Experience Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- AR Applications Section -->
+    <section class="showcase-section" id="ar-applications">
+        <div class="container">
+            <div class="showcase-content">
+                <h2>Augmented Reality Applications</h2>
+                <p>Blend digital content with the real world to create interactive learning experiences that bring abstract concepts to life. AR applications enhance traditional materials and create new possibilities for exploration and understanding.</p>
+                
+                <div class="card-3d-container">
+                    <div class="card-3d">
+                        <div class="card-3d-front">
+                            <img src="/api/placeholder/400/300" alt="CNN Tensor Conversions" class="card-3d-img">
+                            <div class="card-3d-body">
+                                <h3>Convolution Neural Network</h3>
+                                <p>Visualize tensor conversions and neural network operations in an augmented reality environment.</p>
+                            </div>
+                        </div>
+                        <div class="card-3d-back">
+                            <h3>CNN Visualization Tool</h3>
+                            <p>Interact with layers, transformations, and operations of convolutional neural networks to understand deep learning concepts.</p>
+                            <a href="#" class="btn btn-secondary open-modal" data-modal="ar-modal-1">Try It Out</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-3d">
+                        <div class="card-3d-front">
+                            <img src="/api/placeholder/400/300" alt="Shakespeare Emotional Analysis" class="card-3d-img">
+                            <div class="card-3d-body">
+                                <h3>Hamlet Emotional Tone Analysis</h3>
+                                <p>Explore the emotional landscape of Shakespeare's characters through interactive visualizations.</p>
+                            </div>
+                        </div>
+                        <div class="card-3d-back">
+                            <h3>Shakespeare's Emotional Landscape</h3>
+                            <p>Analyze the changing emotional tones throughout Hamlet with color-coded visualizations and interactive character maps.</p>
+                            <a href="#" class="btn btn-secondary open-modal" data-modal="ar-modal-2">Try It Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Simulations Section -->
+    <section class="showcase-section" id="simulations">
+        <div class="container">
+            <div class="showcase-content">
+                <h2>Interactive Simulations</h2>
+                <p>Our interactive simulations provide realistic, hands-on learning experiences for complex subjects. These powerful tools allow students to experiment, make decisions, and see the consequences in a controlled environment.</p>
+                
+                <div class="progress-container">
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Immersive Grading" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Immersive Grading Simulator</h3>
+                            <p class="card-text">Help students understand weighted grade calculations through an interactive visualization.</p>
+                            <div class="progress-circle">
+                                <svg width="150" height="150">
+                                    <circle class="progress-circle-bg" cx="75" cy="75" r="65"></circle>
+                                    <circle class="progress-circle-fill" cx="75" cy="75" r="65" stroke-dasharray="408" stroke-dashoffset="102"></circle>
+                                </svg>
+                                <div class="progress-text">75%</div>
+                            </div>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="sim-modal-1">Launch Simulation</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Discussion Feedback" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Immersive Discussion Feedback</h3>
+                            <p class="card-text">Provide rich, contextual feedback on discussion posts through interactive annotations.</p>
+                            <div class="progress-circle">
+                                <svg width="150" height="150">
+                                    <circle class="progress-circle-bg" cx="75" cy="75" r="65"></circle>
+                                    <circle class="progress-circle-fill" cx="75" cy="75" r="65" stroke-dasharray="408" stroke-dashoffset="163"></circle>
+                                </svg>
+                                <div class="progress-text">60%</div>
+                            </div>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="sim-modal-2">Launch Simulation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gamification Section -->
+    <section class="showcase-section" id="gamification">
+        <div class="container">
+            <div class="showcase-content">
+                <h2>Educational Gamification</h2>
+                <p>Harness the power of game mechanics to increase motivation, engagement, and knowledge retention. Our gamified learning experiences make education fun while achieving serious learning objectives.</p>
+                
+                <div class="card-container">
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Canvas LMS GPT" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Canvas LMS Code Generator</h3>
+                            <p class="card-text">AI tool that creates Canvas LMS code with a single click to streamline course development.</p>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="game-modal-1">Try Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Discussion Board GPT" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Discussion Board Builder</h3>
+                            <p class="card-text">AI assistant that helps educators create more engaging and effective discussion boards.</p>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="game-modal-2">Try Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Precalculus GPT" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Precalculus AI Tutor</h3>
+                            <p class="card-text">Customized AI assistant that helps students prepare for tests and complete homework assignments.</p>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="game-modal-3">Try Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="/api/placeholder/400/300" alt="Faculty Training" class="card-img">
+                        <div class="card-body">
+                            <h3 class="card-title">Faculty Training Flip Cards</h3>
+                            <p class="card-text">Interactive flip card system for faculty development and educational technology training.</p>
+                            <a href="#" class="btn btn-primary open-modal" data-modal="game-modal-4">Explore Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Case Studies Section -->
+    <section class="showcase-section" id="case-studies">
+        <div class="container">
+            <div class="showcase-content">
+                <h2>Success Stories: Case Studies</h2>
+                <p>Explore how educational institutions have successfully implemented immersive learning technologies to transform their teaching practices and student outcomes.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>STEM Academy, Boston</h3>
+                            <p class="timeline-date">2023</p>
+                            <p>Implemented VR chemistry labs, resulting in a 42% improvement in test scores and 35% increase in student interest in pursuing STEM careers.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Lincoln High School, Chicago</h3>
+                            <p class="timeline-date">2024</p>
+                            <p>Integrated AR applications into history curriculum, creating a 28% increase in retention and a 45% reduction in classroom management issues.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Westlake Community College</h3>
+                            <p class="timeline-date">2023</p>
+                            <p>Adopted gamified learning platforms for developmental math courses, reducing drop-out rates by 37% and increasing completion rates by 29%.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="showcase-section" id="contact">
+        <div class="container">
+            <div class="showcase-content">
+                <h2>Connect With Us</h2>
+                <p>Ready to transform your educational approach with immersive learning technologies? Let's start a conversation about bringing these innovations to your institution.</p>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Get in Touch</h3>
+                        <p>Fill out this form to receive more information about our immersive learning solutions and how they can be customized for your specific educational needs.</p>
+                        <div style="padding: 1rem; background-color: #f8f9fa; border-radius: 10px; text-align: center;">
+                            <p style="color: var(--primary); font-weight: bold;">Contact Form Placeholder</p>
+                            <p>In the final version, this will be replaced with your actual contact form or preferred contact method.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>Immersive Learning Showcase</h3>
+            <p>Transforming education through immersive technologies</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon">📱</a>
+                <a href="#" class="social-icon">💻</a>
+                <a href="#" class="social-icon">📧</a>
+                <a href="#" class="social-icon">🔗</a>
+            </div>
+            <p>© 2025 Immersive Learning Showcase. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Modals -->
+    <div class="modal" id="vr-modal-1">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>3D Trigonometry Game</h2>
+            <img src="/api/placeholder/800/400" alt="3D Trigonometry Game" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>This immersive 3D game helps students master vector operations and polar coordinates through interactive challenges and visualizations. Students navigate through game levels by applying trigonometric concepts in engaging scenarios.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>Interactive 3D environment for visualizing vectors and coordinates</li>
+                <li>Progressive difficulty levels that build conceptual understanding</li>
+                <li>Real-time feedback on mathematical problem-solving</li>
+                <li>Visual representations that bridge abstract concepts with spatial reasoning</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Launch Trigonometry Game</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="vr-modal-2">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Interactive Periodic Table</h2>
+            <img src="/api/placeholder/800/400" alt="Interactive Periodic Table" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>Explore the elements in a dynamic, immersive environment that brings chemistry to life. This interactive periodic table allows students to examine atomic structures, electron configurations, and chemical reactions through engaging visualizations.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>3D atomic models showing electron orbitals and nuclear structure</li>
+                <li>Interactive simulations of chemical reactions between elements</li>
+                <li>Historical timeline of element discoveries and applications</li>
+                <li>Real-world examples of each element's practical uses</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Explore Periodic Table</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="vr-modal-3">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Correlation Relativeness Network</h2>
+            <img src="/api/placeholder/800/400" alt="Correlation Network" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>This innovative visualization tool helps students understand statistical correlations through an interactive network display. The immersive environment allows users to explore relationships between variables and understand the concept of correlation strength.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>Interactive network visualization of multivariate correlations</li>
+                <li>Color-coded strength indicators for correlation coefficients</li>
+                <li>Ability to manipulate variables and observe changes in real-time</li>
+                <li>Data import capabilities for analyzing custom datasets</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Explore Correlation Network</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- More modals for other sections -->
+    <div class="modal" id="ar-modal-1">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Convolution Neural Network Visualization</h2>
+            <img src="/api/placeholder/800/400" alt="CNN Visualization" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>This interactive tool demystifies the inner workings of convolutional neural networks through stunning visualizations of tensor conversions. Students can explore how neural networks process information layer by layer, making complex AI concepts more accessible.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>Layer-by-layer exploration of CNN architecture</li>
+                <li>Visual representation of feature extraction and transformations</li>
+                <li>Interactive filters and kernels that can be manipulated</li>
+                <li>Real-time demonstration of how CNNs process information</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Explore CNN Visualization</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="ar-modal-2">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Emotional Tone Analysis: Shakespeare's Hamlet</h2>
+            <img src="/api/placeholder/800/400" alt="Hamlet Emotion Analysis" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>Dive into the emotional landscape of Shakespeare's masterpiece through this interactive visualization tool. Students can analyze the changing emotional tones throughout the play, gaining deeper insight into character development and thematic elements.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>Color-coded visualization of emotional shifts throughout the text</li>
+                <li>Character-specific emotional trajectory mapping</li>
+                <li>Interactive scene analysis with contextual annotations</li>
+                <li>Comparative analysis of character emotional states</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Explore Hamlet Analysis</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="sim-modal-1">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Immersive Grading Simulator</h2>
+            <img src="/api/placeholder/800/400" alt="Immersive Grading" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>This interactive tool helps students understand weighted grade calculations through visual representations and simulations. By making the abstract concept of weighted grading concrete and manipulable, students gain insight into how different assignments impact their overall course performance.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>Visual representation of grade weight distribution across assignment categories</li>
+                <li>Interactive "what-if" scenarios to explore potential grade outcomes</li>
+                <li>Real-time grade calculations as assignment scores are adjusted</li>
+                <li>Progress tracking toward learning objectives and grade goals</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Try Grading Simulator</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="sim-modal-2">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Immersive Discussion Feedback</h2>
+            <img src="/api/placeholder/800/400" alt="Discussion Feedback" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>Provide rich, contextual feedback on discussion posts through this interactive annotation tool. Instructors can leave multi-dimensional feedback that helps students understand both the strengths of their contributions and areas for improvement.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>Contextual annotations linked directly to specific text segments</li>
+                <li>Multi-modal feedback options including text, audio, and video comments</li>
+                <li>Rubric integration for consistent assessment criteria</li>
+                <li>Comparison tools to highlight exemplary discussion contributions</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Try Discussion Feedback Tool</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="game-modal-1">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Canvas LMS Code Generator</h2>
+            <img src="/api/placeholder/800/400" alt="Canvas LMS GPT" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>This specialized AI tool generates ready-to-use code for Canvas LMS with just one click, streamlining course development and saving educators valuable time. Create complex elements without needing to master HTML, CSS, or JavaScript.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>One-click generation of custom Canvas LMS elements</li>
+                <li>Support for interactive content, custom layouts, and specialized modules</li>
+                <li>Responsive design elements that work across all devices</li>
+                <li>No coding knowledge required to create professional course elements</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Try Canvas Code Generator</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="game-modal-2">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Discussion Board Builder</h2>
+            <img src="/api/placeholder/800/400" alt="Discussion Board GPT" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>This AI assistant helps educators create more engaging and effective discussion boards by generating thought-provoking prompts, designing scaffolded discussions, and developing rubrics that promote meaningful student interaction.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>AI-generated discussion prompts based on learning objectives</li>
+                <li>Structured discussion templates for various pedagogical approaches</li>
+                <li>Customizable rubrics that assess quality of dialogue</li>
+                <li>Strategies for increasing student engagement and participation</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Try Discussion Board Builder</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="game-modal-3">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Precalculus AI Tutor</h2>
+            <img src="/api/placeholder/800/400" alt="Precalculus GPT" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>This customized AI assistant is specifically designed to help precalculus students with test preparation and homework completion. It provides step-by-step explanations, practice problems, and conceptual guidance tailored to your curriculum.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>Step-by-step solution walkthroughs for precalculus problems</li>
+                <li>Customized to align with your specific curriculum and textbook</li>
+                <li>Ability to generate similar practice problems with solutions</li>
+                <li>Conceptual explanations that build mathematical understanding</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Try Precalculus AI Tutor</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="game-modal-4">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Faculty Training Flip Cards</h2>
+            <img src="/api/placeholder/800/400" alt="Faculty Training" style="width: 100%; border-radius: 10px; margin: 1rem 0;">
+            <p>This interactive flip card system provides engaging professional development for faculty members, focusing on educational technology integration and innovative teaching strategies. The interactive format makes complex concepts accessible and retention-friendly.</p>
+            <h3>Features:</h3>
+            <ul>
+                <li>Interactive flip cards with multi-modal content delivery</li>
+                <li>Progressive learning paths that build skills systematically</li>
+                <li>Self-paced modules that accommodate busy faculty schedules</li>
+                <li>Practical application exercises with immediate feedback</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn btn-primary">Explore Faculty Training</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Create particle elements
+        const particles = document.getElementById('particles');
+        const createParticles = () => {
+            particles.innerHTML = '';
+            const numParticles = 50;
+            
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 30 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.bottom = `${posY}%`;
+                
+                // Random color
+                const colors = ['#3a86ff', '#8338ec', '#ff006e', '#ffbe0b', '#06d6a0'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.backgroundColor = color;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particles.appendChild(particle);
+            }
+        };
+        
+        // Custom cursor
+        const customCursor = document.querySelector('.custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            customCursor.style.left = `${e.clientX}px`;
+            customCursor.style.top = `${e.clientY}px`;
+        });
+        
+        document.addEventListener('mousedown', () => {
+            customCursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        });
+        
+        document.addEventListener('mouseup', () => {
+            customCursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+        
+        // Hover effect for buttons and links
+        const hoverElements = document.querySelectorAll('a, .btn, .card, .feature');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                customCursor.style.width = '60px';
+                customCursor.style.height = '60px';
+                customCursor.style.border = '2px solid var(--accent)';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                customCursor.style.width = '40px';
+                customCursor.style.height = '40px';
+                customCursor.style.border = '2px solid var(--primary)';
+            });
+        });
+        
+        // Navigation highlight based on scroll position
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.showcase-section');
+        
+        const highlightNav = () => {
+            const scrollPosition = window.scrollY;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        };
+        
+        // Show timeline items on scroll
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        const showTimelineItems = () => {
+            timelineItems.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top;
+                if (itemTop < window.innerHeight * 0.8) {
+                    item.classList.add('show');
+                }
+            });
+        };
+        
+        // Modal functionality
+        const modals = document.querySelectorAll('.modal');
+        const modalTriggers = document.querySelectorAll('.open-modal');
+        const closeButtons = document.querySelectorAll('.close-modal');
+        
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                const modalId = trigger.dataset.modal;
+                const modal = document.getElementById(modalId);
+                modal.classList.add('show');
+            });
+        });
+        
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.modal');
+                modal.classList.remove('show');
+            });
+        });
+        
+        // Close modal when clicking outside
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                }
+            });
+        });
+        
+        // Initialize everything when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            highlightNav();
+            showTimelineItems();
+            
+            // Update circle progress animation
+            const circles = document.querySelectorAll('.progress-circle-fill');
+            circles.forEach(circle => {
+                const percent = circle.closest('.progress-circle').querySelector('.progress-text').textContent;
+                const value = parseInt(percent);
+                const circumference = 2 * Math.PI * 65;
+                const offset = circumference - (value / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+            });
+        });
+        
+        // Update on scroll
+        window.addEventListener('scroll', () => {
+            highlightNav();
+            showTimelineItems();
+        });
+    </script>
+</body>
+</html>
